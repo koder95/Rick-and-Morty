@@ -1,0 +1,77 @@
+package pl.koder95.rickandmortyfx.controller;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import pl.koder95.rickandmortyfx.dto.CharacterViewDto;
+import pl.koder95.rickandmortyfx.dto.EpisodeLinkDto;
+import pl.koder95.rickandmortyfx.dto.LocationLinkDto;
+
+import java.util.List;
+import java.util.Optional;
+
+public class CharacterViewController {
+
+    @FXML
+    private ImageView avatar;
+    @FXML
+    private Label id;
+    @FXML
+    private Label name;
+    @FXML
+    private Label status;
+    @FXML
+    private Label species;
+    @FXML
+    private Label type;
+    @FXML
+    private Label gender;
+    @FXML
+    private Label created;
+    @FXML
+    private ListView<EpisodeLinkDto> episodes;
+    @FXML
+    private ListView<LocationLinkDto> locations;
+
+    private final ObjectProperty<CharacterViewDto> showingCharacter = new SimpleObjectProperty<>();
+
+    public void initialize() {
+        System.out.println("Character view initialized");
+        Image nullAvatar = new Image("unknown-avatar.png");
+        CharacterViewDto placeholder = new CharacterViewDto(Optional.empty(),
+                Optional.empty(),
+                Optional.empty(),
+                Optional.empty(),
+                Optional.empty(),
+                Optional.empty(),
+                Optional.empty(),
+                Optional.of(nullAvatar),
+                Optional.empty(),
+                Optional.empty()
+        );
+        showingCharacter.subscribe(dto -> {
+            if (dto == null) {
+                dto = placeholder;
+            }
+            id.setText(dto.id().map(Object::toString).orElse("unknown"));
+            name.setText(dto.name().orElse("unknown"));
+            status.setText(dto.status().orElse("unknown"));
+            species.setText(dto.species().orElse("unknown"));
+            type.setText(dto.type().orElse("unknown"));
+            gender.setText(dto.gender().orElse("unknown"));
+            created.setText(dto.created().orElse("unknown"));
+            episodes.setItems(FXCollections.observableList(dto.episodes().orElse(List.of())));
+            locations.setItems(FXCollections.observableList(dto.locations().orElse(List.of())));
+            avatar.setImage(dto.avatar().orElse(nullAvatar));
+        });
+    }
+
+    public void showCharacter(CharacterViewDto dto) {
+        showingCharacter.setValue(dto);
+    }
+}

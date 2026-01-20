@@ -1,0 +1,103 @@
+name: Build JavaFX App
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'graalvm'
+          java-version: '21'
+
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+
+      - name: Build with Maven
+        run: mvn -B clean package
+
+      - name: Prepare input
+        run: |
+          mvn dependency:copy-dependencies
+          mkdir target/jpackage-input
+          cp target/rickandmortyfx.jar target/jpackage-input
+
+      # WINDOWS
+      - name: Package Windows app
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          jpackage \
+            --vendor Koder95.pl \
+            --type app-image \
+            --name rickandmortyfx \
+            --input target/jpackage-input \
+            --module rickandmortyfx/pl.koder95.rickandmortyfx.App \
+            --dest target/jpackage \
+            --module-path target/dependency \
+            --runtime-image target/image/
+
+      # LINUX
+      - name: Package Linux app
+        if: runner.os == 'Linux'
+        run: |
+          jpackage \
+            --vendor Koder95.pl \
+            --type app-image \
+            --name rickandmortyfx \
+            --input target/jpackage-input \
+            --module rickandmortyfx/pl.koder95.rickandmortyfx.App \
+            --dest target/jpackage \
+            --module-path target/dependency \
+            --runtime-image target/image/
+
+      # MACOS
+      - name: Package macOS app
+        if: runner.os == 'macOS'
+        run: |
+          jpackage \
+            --vendor Koder95.pl \
+            --type app-image \
+            --name rickandmortyfx \
+            --input target/jpackage-input \
+            --module rickandmortyfx/pl.koder95.rickandmortyfx.App \
+            --dest target/jpackage \
+            --module-path target/dependency \
+            --runtime-image target/image/
+
+      - name: Upload artifact Windows
+        uses: actions/upload-artifact@v4
+        if: runner.os == 'Windows'
+        with:
+          name: rickandmortyfx-Windows
+          path: target/jpackage/rickandmortyfx
+
+      - name: Upload artifact Linux
+        uses: actions/upload-artifact@v4
+        if: runner.os == 'Linux'
+        with:
+          name: rickandmortyfx-Linux
+          path: target/jpackage/rickandmortyfx
+
+      - name: Upload artifact macOS
+        uses: actions/upload-artifact@v4
+        if: runner.os == 'macOS'
+        with:
+          name: rickandmortyfx-macOS
+          path: target/jpackage/rickandmortyfx.app
+
