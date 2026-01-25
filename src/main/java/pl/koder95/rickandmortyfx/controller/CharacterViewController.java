@@ -36,7 +36,9 @@ public class CharacterViewController {
     @FXML
     private ListView<EpisodeLinkDto> episodes;
     @FXML
-    private ListView<LocationLinkDto> locations;
+    private Label origin;
+    @FXML
+    private Label otherLocation;
 
     private final ObjectProperty<CharacterViewDto> showingCharacter = new SimpleObjectProperty<>();
 
@@ -44,6 +46,7 @@ public class CharacterViewController {
         System.out.println("Character view initialized");
         Image nullAvatar = new Image("unknown-avatar.png");
         CharacterViewDto placeholder = new CharacterViewDto(Optional.empty(),
+                Optional.empty(),
                 Optional.empty(),
                 Optional.empty(),
                 Optional.empty(),
@@ -66,7 +69,8 @@ public class CharacterViewController {
             gender.setText(dto.gender().orElse("unknown"));
             created.setText(dto.created().orElse("unknown"));
             episodes.setItems(FXCollections.observableList(dto.episodes().orElse(List.of())));
-            locations.setItems(FXCollections.observableList(dto.locations().orElse(List.of())));
+            origin.setText(dto.origin().map(Object::toString).orElse("unknown"));
+            otherLocation.setText(dto.location().map(Object::toString).orElse("unknown"));
             avatar.setImage(dto.avatar().orElse(nullAvatar));
         });
     }

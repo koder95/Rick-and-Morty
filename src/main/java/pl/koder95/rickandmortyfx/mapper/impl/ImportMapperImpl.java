@@ -15,7 +15,6 @@ import pl.koder95.rickandmortyfx.mapper.ImportMapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class ImportMapperImpl implements ImportMapper {
@@ -24,7 +23,6 @@ public class ImportMapperImpl implements ImportMapper {
 
     @Override
     public Character toApiEntity(CharacterViewDto characterViewDto) {
-        List<LocationLinkDto> locationDtos = characterViewDto.locations().orElse(List.of());
         return new Character(
                 characterViewDto.id().orElse(null),
                 characterViewDto.name().orElse(null),
@@ -32,8 +30,8 @@ public class ImportMapperImpl implements ImportMapper {
                 characterViewDto.species().orElse(null),
                 characterViewDto.type().orElse(null),
                 characterViewDto.gender().orElse(null),
-                fromLocation(locationDtos).get(0),
-                fromLocation(locationDtos).get(1),
+                characterViewDto.origin().map(this::fromLocation).orElse(null),
+                characterViewDto.location().map(this::fromLocation).orElse(null),
                 characterViewDto.avatar().map(Image::getUrl).orElse(null),
                 toApiEntityList(characterViewDto.episodes().orElse(List.of())),
                 characterViewDto.created().map(LocalDateTime::parse).orElse(null)
@@ -46,10 +44,8 @@ public class ImportMapperImpl implements ImportMapper {
                 .toList();
     }
 
-    private List<NamedUrl> fromLocation(List<LocationLinkDto> locations) {
-        return locations.stream()
-                .map(locationLinkDto -> new NamedUrl(locationLinkDto.name(), Endpoint.LOCATION.getIdUrl(locationLinkDto.id())))
-                .toList();
+    private NamedUrl fromLocation(LocationLinkDto dto) {
+        return new NamedUrl(dto.name(), Endpoint.LOCATION.getIdUrl(dto.id()));
     }
 
     @Override
@@ -61,9 +57,8 @@ public class ImportMapperImpl implements ImportMapper {
                 character.species(),
                 character.type(),
                 character.gender(),
-                Stream.of(character.origin(), character.location())
-                        .map(this::toViewDto)
-                        .toList(),
+                toViewDto(character.origin()),
+                toViewDto(character.location()),
                 new Image(character.image()),
                 character.episode()
                         .stream()
