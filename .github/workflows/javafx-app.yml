@@ -47,7 +47,7 @@ jobs:
             --type app-image \
             --name rickandmortyfx \
             --input target/jpackage-input \
-            --module rickandmortyfx/pl.koder95.rickandmortyfx.App \
+            --module rickandmortyfx/pl.koder95.rickandmortyfx.Main \
             --dest target/jpackage \
             --module-path target/dependency \
             --runtime-image target/image/
@@ -61,7 +61,7 @@ jobs:
             --type app-image \
             --name rickandmortyfx \
             --input target/jpackage-input \
-            --module rickandmortyfx/pl.koder95.rickandmortyfx.App \
+            --module rickandmortyfx/pl.koder95.rickandmortyfx.Main \
             --dest target/jpackage \
             --module-path target/dependency \
             --runtime-image target/image/
@@ -75,7 +75,7 @@ jobs:
             --type app-image \
             --name rickandmortyfx \
             --input target/jpackage-input \
-            --module rickandmortyfx/pl.koder95.rickandmortyfx.App \
+            --module rickandmortyfx/pl.koder95.rickandmortyfx.Main \
             --dest target/jpackage \
             --module-path target/dependency \
             --runtime-image target/image/

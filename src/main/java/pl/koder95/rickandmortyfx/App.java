@@ -1,7 +1,6 @@
 package pl.koder95.rickandmortyfx;
 
 import java.io.IOException;
-import java.net.http.HttpClient;
 import java.util.Optional;
 import java.util.Random;
 import javafx.application.Application;
@@ -9,34 +8,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pl.koder95.rickandmortyfx.api.ResourceFactory;
-import pl.koder95.rickandmortyfx.api.Resources;
-import pl.koder95.rickandmortyfx.api.impl.RestResourceFactory;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.stereotype.Component;
 import pl.koder95.rickandmortyfx.controller.CharacterViewController;
 import pl.koder95.rickandmortyfx.dto.CharacterViewDto;
-import pl.koder95.rickandmortyfx.mapper.ImportMapper;
-import pl.koder95.rickandmortyfx.mapper.impl.ImportMapperImpl;
 import pl.koder95.rickandmortyfx.service.ImportService;
-import pl.koder95.rickandmortyfx.service.impl.ImportServiceImpl;
-import tools.jackson.databind.ObjectMapper;
-
 
 /**
  * JavaFX App
  */
+@Component
 public class App extends Application {
-
+    private ConfigurableApplicationContext applicationContext;
     private ImportService importService;
 
     @Override
     public void init() throws Exception {
         super.init();
-        HttpClient httpClient = HttpClient.newHttpClient();
-        ObjectMapper objectMapper = new ObjectMapper();
-        ResourceFactory resourceFactory = new RestResourceFactory(httpClient, objectMapper);
-        Resources resources = new Resources(resourceFactory);
-        ImportMapper importMapper = new ImportMapperImpl(resources);
-        importService = new ImportServiceImpl(resources, importMapper);
+        applicationContext = new SpringApplicationBuilder(Main.class).run();
+        importService = applicationContext.getBean(ImportService.class);
     }
 
     @Override
@@ -55,12 +47,13 @@ public class App extends Application {
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Rick and Morty");
+        ConfigurableEnvironment environment = applicationContext.getEnvironment();
+        stage.setTitle(environment.getProperty("javafx.application.title"));
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
+    @Override
+    public void stop() {
+        applicationContext.stop();
     }
-
 }

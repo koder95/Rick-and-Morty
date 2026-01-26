@@ -1,7 +1,10 @@
 package pl.koder95.rickandmortyfx.mapper.impl;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import javafx.scene.image.Image;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import pl.koder95.rickandmortyfx.api.Endpoint;
 import pl.koder95.rickandmortyfx.api.Resources;
 import pl.koder95.rickandmortyfx.api.data.Character;
@@ -13,9 +16,7 @@ import pl.koder95.rickandmortyfx.dto.EpisodeLinkDto;
 import pl.koder95.rickandmortyfx.dto.LocationLinkDto;
 import pl.koder95.rickandmortyfx.mapper.ImportMapper;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+@Component
 @RequiredArgsConstructor
 public class ImportMapperImpl implements ImportMapper {
 

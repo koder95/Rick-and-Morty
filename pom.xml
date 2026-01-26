@@ -4,8 +4,13 @@
     <name>Rick and Morty</name>
     <groupId>pl.koder95</groupId>
     <artifactId>rick-and-morty-fx</artifactId>
-    <version>0.1.1</version>
+    <version>0.2.0</version>
     <packaging>jar</packaging>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.2</version>
+    </parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
@@ -14,6 +19,10 @@
         <lombok.version>1.18.42</lombok.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -69,7 +78,7 @@
                 </executions>
 
                 <configuration>
-                    <mainClass>rickandmortyfx/pl.koder95.rickandmortyfx.App</mainClass>
+                    <mainClass>rickandmortyfx/pl.koder95.rickandmortyfx.Main</mainClass>
                     <launcher>rickandmortyfx</launcher>
                 </configuration>
             </plugin>

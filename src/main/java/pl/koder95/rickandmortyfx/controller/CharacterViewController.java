@@ -1,5 +1,7 @@
 package pl.koder95.rickandmortyfx.controller;
 
+import java.util.List;
+import java.util.Optional;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -8,13 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.springframework.stereotype.Controller;
 import pl.koder95.rickandmortyfx.dto.CharacterViewDto;
 import pl.koder95.rickandmortyfx.dto.EpisodeLinkDto;
-import pl.koder95.rickandmortyfx.dto.LocationLinkDto;
 
-import java.util.List;
-import java.util.Optional;
-
+@Controller
 public class CharacterViewController {
 
     @FXML
@@ -43,7 +43,6 @@ public class CharacterViewController {
     private final ObjectProperty<CharacterViewDto> showingCharacter = new SimpleObjectProperty<>();
 
     public void initialize() {
-        System.out.println("Character view initialized");
         Image nullAvatar = new Image("unknown-avatar.png");
         CharacterViewDto placeholder = new CharacterViewDto(Optional.empty(),
                 Optional.empty(),

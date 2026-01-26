@@ -1,14 +1,15 @@
 package pl.koder95.rickandmortyfx.service.impl;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import pl.koder95.rickandmortyfx.api.Resources;
 import pl.koder95.rickandmortyfx.api.data.Character;
 import pl.koder95.rickandmortyfx.dto.CharacterViewDto;
 import pl.koder95.rickandmortyfx.mapper.ImportMapper;
 import pl.koder95.rickandmortyfx.service.ImportService;
 
-import java.util.Optional;
-
+@Service
 @RequiredArgsConstructor
 public class ImportServiceImpl implements ImportService {
 
