@@ -4,6 +4,6 @@
 ![GitHub Tag](https://img.shields.io/github/v/tag/koder95/Rick-and-Morty?color=0af)
 
 ## Screenshots
-![Basic informations](media/screenshots/v0.1.1-id758-basic-infos.png)
-![Episodes](media/screenshots/v0.1.1-id285-episodes.png)
-![Locations](media/screenshots/v0.1.1-id134-locations.png)
+![Basic informations](media/screenshots/v0.2.0-id228-basic-infos.png)
+![Episodes](media/screenshots/v0.2.0-id545-episodes.png)
+![Locations](media/screenshots/v0.2.0-id214-locations.png)
