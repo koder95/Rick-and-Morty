@@ -20,4 +20,9 @@ public class ImportServiceImpl implements ImportService {
         Character found = resources.characters().getId(id);
         return Optional.ofNullable(found).map(importMapper::toViewDto);
     }
+
+    @Override
+    public long getCharactersCount() {
+        return resources.characters().getPage(1).info().count();
+    }
 }

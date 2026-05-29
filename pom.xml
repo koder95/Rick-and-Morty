@@ -4,7 +4,7 @@
     <name>Rick and Morty</name>
     <groupId>pl.koder95</groupId>
     <artifactId>rick-and-morty-fx</artifactId>
-    <version>0.1.1</version>
+    <version>0.2.0</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

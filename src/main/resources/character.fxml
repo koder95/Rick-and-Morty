@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.koder95.rickandmortyfx.controller.CharacterViewController">
+<VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.koder95.rickandmortyfx.controller.CharacterViewController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <children>
@@ -39,7 +36,14 @@
                                 </rowConstraints>
                                  <children>
                                     <Label text="ID:" />
-                                    <Label fx:id="id" text="1" GridPane.columnIndex="1" />
+                                    <FlowPane alignment="CENTER_LEFT" hgap="5.0" prefWrapLength="10.0" vgap="5.0" GridPane.columnIndex="1">
+                                       <children>
+                                          <Button fx:id="prevIdButton" mnemonicParsing="false" onAction="#prevId" text="&lt;" />
+                                          <Label fx:id="id" text="1" />
+                                          <Button fx:id="nextIdButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#nextId" text="&gt;" />
+                                          <Button layoutX="42.0" layoutY="13.0" mnemonicParsing="false" onAction="#drawNextId" text="draw" />
+                                       </children>
+                                    </FlowPane>
                                     <Label text="Name:" GridPane.rowIndex="1" />
                                     <Label fx:id="name" text="Rick Sanchez" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Label text="Status:" GridPane.rowIndex="2" />
