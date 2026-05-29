@@ -2,18 +2,17 @@ package pl.koder95.rickandmortyfx;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
-import java.util.Optional;
-import java.util.Random;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import pl.koder95.rickandmortyfx.api.ResourceFactory;
 import pl.koder95.rickandmortyfx.api.Resources;
 import pl.koder95.rickandmortyfx.api.impl.RestResourceFactory;
 import pl.koder95.rickandmortyfx.controller.CharacterViewController;
-import pl.koder95.rickandmortyfx.dto.CharacterViewDto;
 import pl.koder95.rickandmortyfx.mapper.ImportMapper;
 import pl.koder95.rickandmortyfx.mapper.impl.ImportMapperImpl;
 import pl.koder95.rickandmortyfx.service.ImportService;
@@ -46,11 +45,14 @@ public class App extends Application {
             FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("character.fxml"));
             root = loader.load();
             CharacterViewController characterViewController = loader.getController();
-            Random random = new Random();
-            Optional<CharacterViewDto> characterViewDto = importService.importCharacter(random.nextLong(1, 826));
-            characterViewDto.ifPresent(characterViewController::showCharacter);
+            characterViewController.setImportService(importService);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to load UI");
+            alert.setContentText("Unable to load the user interface. Please try again later.");
+            alert.showAndWait();
+            return;
         }
 
         Scene scene = new Scene(root);

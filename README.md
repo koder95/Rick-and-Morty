@@ -4,6 +4,14 @@
 ![GitHub Tag](https://img.shields.io/github/v/tag/koder95/Rick-and-Morty?color=0af)
 
 ## Screenshots
-![Basic informations](media/screenshots/v0.1.1-id758-basic-infos.png)
-![Episodes](media/screenshots/v0.1.1-id285-episodes.png)
-![Locations](media/screenshots/v0.1.1-id134-locations.png)
+![Basic informations](media/screenshots/v0.2.0-id228-basic-infos.png)
+![Episodes](media/screenshots/v0.2.0-id545-episodes.png)
+![Locations](media/screenshots/v0.2.0-id214-locations.png)
+
+## Technologies
+
+This project is built with the following technologies:
+
+- **Java** – The primary programming language for the entire application
+- **JavaFX** – Framework for building the graphical user interface (GUI) with rich desktop application features
+- **Rick and Morty API** – External API used as the data source for character, episode, and location information
